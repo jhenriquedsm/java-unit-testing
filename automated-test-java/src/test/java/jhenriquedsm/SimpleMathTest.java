@@ -83,4 +83,18 @@ public class SimpleMathTest {
         );
         Assertions.assertNotEquals(10D, expected);
     }
+
+    @Test
+    void testSquareRoot() {
+        SimpleMath simpleMath = new SimpleMath();
+        Double number = 25D;
+
+        Double actual = simpleMath.squareRoot(number);
+        Double expected = 5D;
+
+        Assertions.assertEquals(expected, actual,
+                () -> "squareRoot(" + number + ") did not produce " + expected + "!"
+        );
+        Assertions.assertNotEquals(20D, expected);
+    }
 }
