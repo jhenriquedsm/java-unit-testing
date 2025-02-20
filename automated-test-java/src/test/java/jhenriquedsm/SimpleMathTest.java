@@ -67,4 +67,20 @@ public class SimpleMathTest {
         );
         Assertions.assertNotEquals(4D, expected);
     }
+
+    @Test
+    void testMean() {
+        SimpleMath simpleMath = new SimpleMath();
+        Double firstNumber = 12.5;
+        Double secondNumber = 17.5;
+
+        Double actual = simpleMath.mean(firstNumber, secondNumber);
+        Double expected = 15D;
+
+        Assertions.assertEquals(expected, actual,
+                () -> firstNumber + " + " + secondNumber +
+                        " / 2 did not produce " + expected + "!"
+        );
+        Assertions.assertNotEquals(10D, expected);
+    }
 }
