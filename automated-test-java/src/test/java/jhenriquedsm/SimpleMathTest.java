@@ -19,4 +19,20 @@ public class SimpleMathTest {
         Assertions.assertNotEquals(9.2, actual);
         Assertions.assertNotNull(actual);
     }
+
+    @Test
+    void testSubtraction() {
+        SimpleMath simpleMath = new SimpleMath();
+        Double firstNumber = 20D;
+        Double secondNumber = 10D;
+
+        Double actual = simpleMath.subtraction(firstNumber, secondNumber);
+        Double expected = 10D;
+
+        Assertions.assertEquals(expected, actual,
+                () -> firstNumber + " - " + secondNumber +
+                        " did not produce " + expected + "!"
+        );
+        Assertions.assertNotEquals(9.9, expected);
+    }
 }
