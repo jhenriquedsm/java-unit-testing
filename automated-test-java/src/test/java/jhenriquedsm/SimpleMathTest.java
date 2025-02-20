@@ -11,5 +11,7 @@ public class SimpleMathTest {
         Double expected = 8.2D;
 
         Assertions.assertEquals(expected, actual, "6.2 + 2 did not produce 8.2");
+        Assertions.assertNotEquals(9.2, actual);
+        Assertions.assertNotNull(actual);
     }
 }
