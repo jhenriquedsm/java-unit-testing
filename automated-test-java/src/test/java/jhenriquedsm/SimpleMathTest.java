@@ -35,4 +35,20 @@ public class SimpleMathTest {
         );
         Assertions.assertNotEquals(9.9, expected);
     }
+
+    @Test
+    void testMultiplication() {
+        SimpleMath simpleMath = new SimpleMath();
+        Double firstNumber = 5D;
+        Double secondNumber = 5D;
+
+        Double actual = simpleMath.multiplication(firstNumber, secondNumber);
+        Double expected = 25D;
+
+        Assertions.assertEquals(expected, actual,
+                () -> firstNumber + " * " + secondNumber +
+                        " did not produce " + expected + "!"
+        );
+        Assertions.assertNotEquals(10D, expected);
+    }
 }
