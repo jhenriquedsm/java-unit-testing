@@ -7,10 +7,15 @@ public class SimpleMathTest {
     @Test
     void testSum() {
         SimpleMath simpleMath = new SimpleMath();
-        Double actual = simpleMath.sum(6.2D, 2D);
+        Double firstNumber = 6.2D;
+        Double secondNumber = 2D;
+
+        Double actual = simpleMath.sum(firstNumber, secondNumber);
         Double expected = 8.2D;
 
-        Assertions.assertEquals(expected, actual, "6.2 + 2 did not produce 8.2");
+        Assertions.assertEquals(expected, actual,
+                () -> firstNumber + " + " + secondNumber +
+                        " did not produce " + expected + "!");
         Assertions.assertNotEquals(9.2, actual);
         Assertions.assertNotNull(actual);
     }
