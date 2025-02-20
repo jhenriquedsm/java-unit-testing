@@ -10,7 +10,6 @@
 
     <properties>
         <java.version>17</java.version>
-        <junit.version>5.9.2</junit.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
@@ -22,7 +21,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>${junit.version}</version>
+            <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
