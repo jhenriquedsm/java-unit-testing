@@ -51,4 +51,20 @@ public class SimpleMathTest {
         );
         Assertions.assertNotEquals(10D, expected);
     }
+
+    @Test
+    void testDivision() {
+        SimpleMath simpleMath = new SimpleMath();
+        Double firstNumber = 25D;
+        Double secondNumber = 5D;
+
+        Double actual = simpleMath.division(firstNumber, secondNumber);
+        Double expected = 5D;
+
+        Assertions.assertEquals(expected, actual,
+                () -> firstNumber + " / " + secondNumber +
+                        " did not produce " + expected + "!"
+        );
+        Assertions.assertNotEquals(4D, expected);
+    }
 }
