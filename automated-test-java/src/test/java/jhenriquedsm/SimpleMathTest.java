@@ -3,9 +3,12 @@ package jhenriquedsm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class SimpleMathTest {
+    // test[System Under Test]_[Condition or State Change]_[Expected Result]
     @Test
-    void testSum() {
+    void testSum_When_SixDotTwoIsAddedByTwo_ShouldReturnEightDotTwo() {
         SimpleMath simpleMath = new SimpleMath();
         Double firstNumber = 6.2D;
         Double secondNumber = 2D;
@@ -66,6 +69,12 @@ public class SimpleMathTest {
                         " did not produce " + expected + "!"
         );
         Assertions.assertNotEquals(4D, expected);
+    }
+
+    // test[System Under Test]_[Condition or State Change]_[Expected Result]
+    @Test
+    void testDivision_When_FirstNumberIsDivideByZero_ShouldThrowArithmeticException() {
+        fail();
     }
 
     @Test
