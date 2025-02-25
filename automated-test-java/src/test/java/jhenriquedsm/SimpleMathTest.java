@@ -1,6 +1,7 @@
 package jhenriquedsm;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -82,7 +83,9 @@ public class SimpleMathTest {
     }
 
     // test[System Under Test]_[Condition or State Change]_[Expected Result]
+    @Disabled("TODO: We need still work on it!")
     @Test
+    @DisplayName("Test Division by Zero")
     void testDivision_When_FirstNumberIsDivideByZero_ShouldThrowArithmeticException() {
         fail();
     }
