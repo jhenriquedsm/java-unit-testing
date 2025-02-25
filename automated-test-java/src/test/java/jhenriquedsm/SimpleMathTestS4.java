@@ -3,6 +3,7 @@ package jhenriquedsm;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -23,7 +24,12 @@ public class SimpleMathTestS4 {
     @DisplayName("Test 25.0 / 5.0 = 5.0")
     @ParameterizedTest
     // @MethodSource("testDivisionInputParameters")
-    @MethodSource()
+    // @MethodSource()
+    @CsvSource({
+            "6.2, 2, 3.1",
+            "71, 14, 5.07",
+            "18.3, 3.1, 5.90"
+    })
     void testDivision(Double firstNumber, Double secondNumber, Double expected) {
         Double actual = simpleMath.division(firstNumber, secondNumber);
 
