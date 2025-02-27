@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 public class PersonServiceTest {
+    IPersonService service;
     Person person;
 
     @BeforeEach
     void setup() {
+        service = new PersonService();
         person = new Person(
                 "José",
                 "Henrique",
@@ -25,7 +27,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenSuccess_ShouldReturnPersonObject() {
     	// Given / Arrange
-        IPersonService service = new PersonService();
 
     	// When / Act
         Person actual = service.createPerson(person);
@@ -38,7 +39,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenSuccess_ShouldContainsFirstNameInReturnedPersonObject() {
         // Given / Arrange
-        IPersonService service = new PersonService();
 
         // When / Act
         Person actual = service.createPerson(person);
@@ -51,7 +51,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenSuccess_ShouldContainsSecondNameInReturnedPersonObject() {
         // Given / Arrange
-        IPersonService service = new PersonService();
 
         // When / Act
         Person actual = service.createPerson(person);
@@ -64,7 +63,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenSuccess_ShouldContainsEmailNotNullInReturnedPersonObject() {
         // Given / Arrange
-        IPersonService service = new PersonService();
 
         // When / Act
         Person actual = service.createPerson(person);
@@ -77,7 +75,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenSuccess_ShouldContainsAddressInReturnedPersonObject() {
         // Given / Arrange
-        IPersonService service = new PersonService();
 
         // When / Act
         Person actual = service.createPerson(person);
@@ -90,7 +87,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenSuccess_ShouldContainsValidGenderInReturnedPersonObject() {
         // Given / Arrange
-        IPersonService service = new PersonService();
         Set<String> validGenders = Set.of("Male", "M", "Female", "F", "Other");
 
         // When / Act
@@ -104,7 +100,6 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhenSuccess_ShouldContainsIdNotNullInReturnedPersonObject() {
         // Given / Arrange
-        IPersonService service = new PersonService();
 
         // When / Act
         Person actual = service.createPerson(person);
@@ -117,15 +112,17 @@ public class PersonServiceTest {
     @Test
     void testCreatePerson_WhithNullEmail_ShouldThrowIllegalArgumentException() {
     	// Given / Arrange
-        IPersonService service = new PersonService();
         person.setEmail("");
+        var expectedException = "The Person email is null or empty";
 
-        // When / Act
-
-    	// Then / Assert
-        Assertions.assertThrows(
+        // When / Act & Then / Assert
+        IllegalArgumentException actual = Assertions.assertThrows(
                 IllegalArgumentException.class,
                 () -> service.createPerson(person),
                 () -> "Empty email should have cause an IllegalArgumentException");
+        Assertions.assertEquals(
+                actual.getMessage(),
+                expectedException,
+                () -> "Unexpected exception message!");
     }
 }
