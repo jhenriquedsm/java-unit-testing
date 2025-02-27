@@ -13,7 +13,6 @@ public class PersonServiceTest {
     @BeforeEach
     void setup() {
         person = new Person(
-                7L,
                 "José",
                 "Henrique",
                 "josehenrique@email.com",
