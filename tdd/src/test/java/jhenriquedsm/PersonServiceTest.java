@@ -112,4 +112,20 @@ public class PersonServiceTest {
         // Then / Assert
         Assertions.assertNotNull(actual.getId(), () -> "The id should not have null!");
     }
+
+    @DisplayName("When Create a Person with Null Email Should Throw Exception")
+    @Test
+    void testCreatePerson_WhithNullEmail_ShouldThrowIllegalArgumentException() {
+    	// Given / Arrange
+        IPersonService service = new PersonService();
+        person.setEmail("");
+
+        // When / Act
+
+    	// Then / Assert
+        Assertions.assertThrows(
+                IllegalArgumentException.class,
+                () -> service.createPerson(person),
+                () -> "Empty email should have cause an IllegalArgumentException");
+    }
 }
