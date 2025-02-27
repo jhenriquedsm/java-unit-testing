@@ -7,7 +7,7 @@
 - [x] Seção 2: Conceitos Básicos de Testes Automatizados
 - [x] Seção 3: Primeiros Passos com JUnit 5 e Java
 - [x] Seção 4: Conceitos Avançados de JUnit 5
-- [ ] Seção 5: Test Driven Development (TDD)
+- [x] Seção 5: Test Driven Development (TDD)
 - [ ] Seção 6: Primeiros Passos em Mockito
 - [ ] Seção 7: Conceitos Avançados de Mockito
 - [ ] Seção 8: Code Coverage
