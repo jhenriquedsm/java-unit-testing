@@ -1,4 +1,4 @@
-package jhenriquedsm;
+package jhenriquedsm.business;
 
 import jhenriquedsm.service.CourseService;
 
@@ -17,6 +17,7 @@ public class CourseBusiness {
 
     public List<String> retrieveCoursesRelatedToSpring(String student) {
         var filteredCourses = new ArrayList<String>();
+        if ("Foo Bar".equals(student)) return filteredCourses;
         var allCourses = courseService.retrieveCourses(student);
 
         for (String course : allCourses) {
