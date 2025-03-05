@@ -8,7 +8,7 @@
 - [x] Seção 3: Primeiros Passos com JUnit 5 e Java
 - [x] Seção 4: Conceitos Avançados de JUnit 5
 - [x] Seção 5: Test Driven Development (TDD)
-- [ ] Seção 6: Primeiros Passos em Mockito
+- [x] Seção 6: Primeiros Passos em Mockito
 - [ ] Seção 7: Conceitos Avançados de Mockito
 - [ ] Seção 8: Code Coverage
 - [ ] Seção 9: REST na Prática com Spring Boot 3
