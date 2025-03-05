@@ -3,16 +3,16 @@ package jhenriquedsm.business;
 import jhenriquedsm.service.CourseService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
 public class CourseBusinessMockWithBDDTest {
     CourseService mockService;
@@ -47,5 +47,22 @@ public class CourseBusinessMockWithBDDTest {
 
     	// Then / Assert
         assertThat(filteredCourses.size(), is(4));
+    }
+
+    @DisplayName("Delete Courses not Related to Spring Using Mockito Should call Method deleteCourse")
+    @Test
+    void testDeleteCoursesNotRelatedToSpring_UsingMockitoVerify_Should_CallMethod_deleteCourse() {
+    	// Given / Arrange
+        given(mockService.retrieveCourses("José Henrique")).willReturn(courses);
+
+    	// When / Act
+        courseBusiness.deleteCoursesNotRelatedToSpring("José Henrique");
+
+    	// Then / Assert
+        verify(mockService).deleteCourse("Agile Desmistificado com Scrum, XP, Kanban e Trello");
+        verify(mockService, times(1)).deleteCourse("Kotlin para DEV's Java: Aprenda a Linguagem Padrão do Android");
+        verify(mockService, atLeast(1)).deleteCourse("Docker para Amazon AWS Implante Apps Java e .NET com Travis CI");
+        verify(mockService, atLeastOnce()).deleteCourse("Spotify Engineering Culture Desmistificado");
+        verify(mockService, never()).deleteCourse("Microsserviços do 0 com Spring Cloud, Kotlin e Docker");
     }
 }
