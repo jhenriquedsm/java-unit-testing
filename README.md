@@ -9,7 +9,7 @@
 - [x] Seção 4: Conceitos Avançados de JUnit 5
 - [x] Seção 5: Test Driven Development (TDD)
 - [x] Seção 6: Primeiros Passos em Mockito
-- [ ] Seção 7: Conceitos Avançados de Mockito
+- [x] Seção 7: Conceitos Avançados de Mockito
 - [ ] Seção 8: Code Coverage
 - [ ] Seção 9: REST na Prática com Spring Boot 3
 - [ ] Seção 10: Testando uma API REST em Spring Boot 3 - Camada de Repositórios
