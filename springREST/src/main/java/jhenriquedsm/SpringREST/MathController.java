@@ -1,5 +1,6 @@
 package jhenriquedsm.SpringREST;
 
+import jhenriquedsm.SpringREST.exceptions.UnsupportedMathOperationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -11,7 +12,7 @@ public class MathController {
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double sum(@PathVariable(value = "numberOne") String numberOne, @PathVariable (value = "numberTwo") String numberTwo) throws Exception {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-            throw new Exception();
+            throw new UnsupportedMathOperationException("Please set a numeric value");
         }
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
