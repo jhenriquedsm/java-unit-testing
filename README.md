@@ -11,7 +11,7 @@
 - [x] Seção 6: Primeiros Passos em Mockito
 - [x] Seção 7: Conceitos Avançados de Mockito
 - [x] Seção 8: Code Coverage
-- [ ] Seção 9: REST na Prática com Spring Boot 3
+- [x] Seção 9: REST na Prática com Spring Boot 3
 - [ ] Seção 10: Testando uma API REST em Spring Boot 3 - Camada de Repositórios
 - [ ] Seção 11: Testando uma API REST em Spring Boot 3 - Camada de Serviços
 - [ ] Seção 12: Testando uma API REST em Spring Boot 3 - Camada de Controllers
