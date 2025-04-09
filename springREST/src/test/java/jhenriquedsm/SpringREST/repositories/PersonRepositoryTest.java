@@ -2,6 +2,7 @@ package jhenriquedsm.SpringREST.repositories;
 
 import jhenriquedsm.SpringREST.model.Person;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,17 @@ class PersonRepositoryTest {
     @Autowired
     PersonRepository repository;
 
+    private Person person;
+
+    @BeforeEach
+    public void setup() {
+        // Given / Arrange
+        person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
+    }
+
     @DisplayName("Given Person Object when Save then Return Saved Person")
     @Test
     void testGivenPersonObject_whenSave_thenReturnSavedPerson() {
-        // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
-
         // When / Act
         Person savedPerson = repository.save(person);
 
@@ -34,7 +40,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenPersonList_whenFindAll_thenReturnPersonList() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         Person person1 = new Person("Théo", "Henrique", "Aracaju - SE", "Male", "thenrique@email.com");
 
         repository.save(person);
@@ -51,7 +56,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenPersonObject_whenFindById_thenReturnPersonObject() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         // When / Act
@@ -66,7 +70,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenPersonObject_whenFindByEmail_thenReturnPersonObject() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         // When / Act
@@ -81,7 +84,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenPersonObject_whenUpdatePerson_thenReturnUpdatedPersonObject() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         // When / Act
@@ -101,7 +103,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenPersonObject_whenDelete_thenRemovePerson() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         // When / Act
@@ -117,7 +118,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenFirstNameAndLastName_whenFindJPQL_thenReturnPersonObject() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         String firstName = "José";
@@ -136,7 +136,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenFirstNameAndLastName_whenFindJPQLNamedParameters_thenReturnPersonObject() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         String firstName = "José";
@@ -155,7 +154,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenFirstNameAndLastName_whenFindNativeSQL_thenReturnPersonObject() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         String firstName = "José";
@@ -174,7 +172,6 @@ class PersonRepositoryTest {
     @Test
     void testGivenFirstNameAndLastName_whenFindNativeSQLwithNamedParameters_thenReturnPersonObject() {
         // Given / Arrange
-        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
         repository.save(person);
 
         String firstName = "José";
