@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 class PersonRepositoryTest {
@@ -94,5 +95,21 @@ class PersonRepositoryTest {
         Assertions.assertNotNull(updatedPerson);
         Assertions.assertEquals("Théo", updatedPerson.getFirstName());
         Assertions.assertEquals("thenrique@email.com", updatedPerson.getEmail());
+    }
+
+    @DisplayName("Given Person Object when Delete then Remove Person")
+    @Test
+    void testGivenPersonObject_whenDelete_thenRemovePerson() {
+        // Given / Arrange
+        Person person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
+        repository.save(person);
+
+        // When / Act
+        repository.deleteById(person.getId());
+
+        Optional<Person> personOptional = repository.findById(person.getId());
+
+        // Then / Assert
+        Assertions.assertTrue(personOptional.isEmpty());
     }
 }
