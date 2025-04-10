@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -30,6 +31,11 @@ public class PersonServices {
 
     public Person create(Person person) {
         logger.info("Creating one person!");
+
+        Optional<Person> savedPerson = repository.findByEmail(person.getEmail());
+        if(savedPerson.isPresent()) {
+            throw new ResourceNotFoundException("Person already exist with given email: " + person.getEmail());
+        }
         return repository.save(person);
     }
 
