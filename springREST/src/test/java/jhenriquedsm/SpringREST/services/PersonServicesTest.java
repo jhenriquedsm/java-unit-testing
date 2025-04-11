@@ -110,4 +110,24 @@ public class PersonServicesTest {
         Assertions.assertNotNull(savedPerson);
         Assertions.assertEquals("José", savedPerson.getFirstName());
     }
+
+    @DisplayName("Given Person Object When Update Person then Return Update Person Object")
+    @Test
+    void testGivenPersonObject_WhenUpdatePerson_thenReturnUpdatePersonObject() {
+        // Given / Arrange
+        person.setId(1L);
+        given(repository.findById(anyLong())).willReturn(Optional.of(person));
+
+        person.setEmail("thenrique@email.com");
+        person.setFirstName("Théo");
+        given(repository.save(person)).willReturn(person);
+
+        // When / Act
+        Person updatedPerson = services.update(person);
+
+        // Then / Assert
+        Assertions.assertNotNull(updatedPerson);
+        Assertions.assertEquals("Théo", updatedPerson.getFirstName());
+        Assertions.assertEquals("thenrique@email.com", updatedPerson.getEmail());
+    }
 }
