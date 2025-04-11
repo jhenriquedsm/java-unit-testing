@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -65,5 +66,20 @@ public class PersonServicesTest {
 
         // Then / Assert
         Mockito.verify(repository, never()).save(any(Person.class));
+    }
+
+    @DisplayName("Given People List When findAll People then Return People List")
+    @Test
+    void testGivenPeopleList_WhenFindAllPeople_thenReturnPeopleList() {
+        // Given / Arrange
+        Person person1 = new Person("Théo", "Henrique", "Aracaju - SE", "Male", "thenrique@email.com");
+        given(repository.findAll()).willReturn(List.of(person, person1));
+
+        // When / Act
+        List<Person> peopleList = services.findAll();
+
+        // Then / Assert
+        Assertions.assertNotNull(peopleList);
+        Assertions.assertEquals(2, peopleList.size());
     }
 }
