@@ -17,8 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 
@@ -96,5 +95,19 @@ public class PersonServicesTest {
         // Then / Assert
         Assertions.assertTrue(peopleList.isEmpty());
         Assertions.assertEquals(0, peopleList.size());
+    }
+
+    @DisplayName("Given Person Id When findById then Return Person Object")
+    @Test
+    void testGivenPersonId_WhenFindById_thenReturnPersonObject() {
+        // Given / Arrange
+        given(repository.findById(anyLong())).willReturn(Optional.of(person));
+
+        // When / Act
+        Person savedPerson = services.findById(1L);
+
+        // Then / Assert
+        Assertions.assertNotNull(savedPerson);
+        Assertions.assertEquals("José", savedPerson.getFirstName());
     }
 }
