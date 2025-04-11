@@ -19,7 +19,9 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonServicesTest {
@@ -129,5 +131,20 @@ public class PersonServicesTest {
         Assertions.assertNotNull(updatedPerson);
         Assertions.assertEquals("Théo", updatedPerson.getFirstName());
         Assertions.assertEquals("thenrique@email.com", updatedPerson.getEmail());
+    }
+
+    @DisplayName("Given Person Id When Delete Person then Do Nothing")
+    @Test
+    void testGivenPersonId_WhenDeletePerson_thenDoNothing() {
+        // Given / Arrange
+        person.setId(1L);
+        given(repository.findById(anyLong())).willReturn(Optional.of(person));
+        willDoNothing().given(repository).delete(person);
+
+        // When / Act
+        services.delete(person.getId());
+
+        // Then / Assert
+        Mockito.verify(repository, times(1)).delete(person);
     }
 }
