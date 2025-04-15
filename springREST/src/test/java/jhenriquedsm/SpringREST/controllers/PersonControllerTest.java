@@ -13,6 +13,7 @@ import jhenriquedsm.SpringREST.services.PersonServices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
@@ -115,5 +116,28 @@ public class PersonControllerTest {
         // Then / Assert
         response.andExpect(status().isNotFound())
                 .andDo(print());
+    }
+
+    @DisplayName("Given Updated Person When Update then Return Updated Person Object")
+    @Test
+    void testGivenUpdatedPerson_WhenUpdate_thenReturnUpdatePersonObject() throws Exception {
+        // Given / Arrange
+        Long personId = 1L;
+        given(service.findById(personId)).willReturn(person);
+        given(service.update(ArgumentMatchers.any(Person.class)))
+                .willAnswer((invocation) -> invocation.getArgument(0));
+
+        // When / Act
+        Person updatedPerson = new Person("Théo", "Henrique", "Brasília - DF", "Male", "thenrique@email.com");
+        ResultActions response = mockMvc.perform(put("/person")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updatedPerson)));
+
+        // Then / Assert
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.firstName", is(updatedPerson.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(updatedPerson.getLastName())))
+                .andExpect(jsonPath("$.email", is(updatedPerson.getEmail())));
     }
 }
