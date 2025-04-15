@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.hamcrest.CoreMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jhenriquedsm.SpringREST.exceptions.ResourceNotFoundException;
 import jhenriquedsm.SpringREST.model.Person;
 import jhenriquedsm.SpringREST.services.PersonServices;
 import org.junit.jupiter.api.BeforeEach;
@@ -98,5 +99,21 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.firstName", is(person.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(person.getLastName())))
                 .andExpect(jsonPath("$.email", is(person.getEmail())));
+    }
+
+    @DisplayName("Given Invalid Person Id When findById then Return Not Found")
+    @Test
+    void testGivenInvalidPersonId_WhenFindById_thenReturnNotFound() throws Exception {
+        // Given / Arrange
+        Long personId = 1L;
+        given(service.findById(personId))
+                .willThrow(ResourceNotFoundException.class);
+
+        // When / Act
+        ResultActions response = mockMvc.perform(get("/person/{id}", personId));
+
+        // Then / Assert
+        response.andExpect(status().isNotFound())
+                .andDo(print());
     }
 }
