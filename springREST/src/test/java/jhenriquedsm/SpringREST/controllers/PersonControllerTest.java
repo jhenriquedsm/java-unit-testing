@@ -19,6 +19,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @WebMvcTest
 public class PersonControllerTest {
     @Autowired
@@ -56,5 +59,25 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.firstName", is(person.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(person.getLastName())))
                 .andExpect(jsonPath("$.email", is(person.getEmail())));
+    }
+
+    @DisplayName("Given List of People When findAll People then Return People List")
+    @Test
+    void testGivenListOfPeople_WhenFindAllPeople_thenReturnPeopleList() throws Exception {
+        // Given / Arrange
+        List<Person> peopleList = new ArrayList<>();
+        peopleList.add(person);
+        peopleList.add(new Person("Théo", "Henrique", "Brasília - DF", "Male", "thenrique@email.com"));
+
+        given(service.findAll())
+                .willReturn(peopleList);
+
+        // When / Act
+        ResultActions response = mockMvc.perform(get("/person"));
+
+        // Then / Assert
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size()", is(peopleList.size())));
     }
 }
