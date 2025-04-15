@@ -161,4 +161,19 @@ public class PersonControllerTest {
         response.andExpect(status().isNotFound())
                 .andDo(print());
     }
+
+    @DisplayName("Given Person Id When Delete then Return No Content")
+    @Test
+    void testGivenPersonId_WhenDelete_thenReturnNoContent() throws Exception {
+        // Given / Arrange
+        Long personId = 1L;
+        willDoNothing().given(service).delete(personId);
+
+        // When / Act
+        ResultActions response = mockMvc.perform(delete("/person/{id}", personId));
+
+        // Then / Assert
+        response.andExpect(status().isNoContent())
+                .andDo(print());
+    }
 }
