@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jhenriquedsm.SpringREST.exceptions.ResourceNotFoundException;
 import jhenriquedsm.SpringREST.model.Person;
@@ -139,5 +140,25 @@ public class PersonControllerTest {
                 .andExpect(jsonPath("$.firstName", is(updatedPerson.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(updatedPerson.getLastName())))
                 .andExpect(jsonPath("$.email", is(updatedPerson.getEmail())));
+    }
+
+    @DisplayName("Given Unexistent Person When Update then Return NotFound")
+    @Test
+    void testGivenUnexistentPerson_WhenUpdate_thenReturnNotFound() throws Exception {
+        // Given / Arrange
+        Long personId = 1L;
+        given(service.findById(personId)).willThrow(ResourceNotFoundException.class);
+        given(service.update(ArgumentMatchers.any(Person.class)))
+                .willAnswer((invocation) -> invocation.getArgument(1));
+
+        // When / Act
+        Person updatedPerson = new Person("Théo", "Henrique", "Brasília - DF", "Male", "thenrique@email.com");
+        ResultActions response = mockMvc.perform(put("/person")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updatedPerson)));
+
+        // Then / Assert
+        response.andExpect(status().isNotFound())
+                .andDo(print());
     }
 }
