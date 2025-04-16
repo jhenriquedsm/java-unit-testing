@@ -109,4 +109,36 @@ public class PersonControllerIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals("Male", createdPerson.getGender());
         Assertions.assertEquals("thenrique@email.com", createdPerson.getEmail());
     }
+
+    @DisplayName("Given Person Object When findById Should Return A Person Object")
+    @Order(3)
+    @Test
+    void integrationTest_when_findById_ShouldReturnAPersonObject() throws JsonProcessingException {
+        var content = given().spec(specification)
+                    .pathParam("id", person.getId())
+                .when()
+                    .get("{id}")
+                .then()
+                    .statusCode(200)
+                        .extract()
+                            .body()
+                                .asString();
+
+        Person foundPerson = objectMapper.readValue(content, Person.class);
+
+        Assertions.assertNotNull(foundPerson);
+        Assertions.assertNotNull(foundPerson.getId());
+        Assertions.assertNotNull(foundPerson.getFirstName());
+        Assertions.assertNotNull(foundPerson.getLastName());
+        Assertions.assertNotNull(foundPerson.getAddress());
+        Assertions.assertNotNull(foundPerson.getGender());
+        Assertions.assertNotNull(foundPerson.getEmail());
+
+        Assertions.assertTrue(foundPerson.getId() > 0);
+        Assertions.assertEquals("José", foundPerson.getFirstName());
+        Assertions.assertEquals("Henrique", foundPerson.getLastName());
+        Assertions.assertEquals("Brasília - DF", foundPerson.getAddress());
+        Assertions.assertEquals("Male", foundPerson.getGender());
+        Assertions.assertEquals("jhenrique@email.com", foundPerson.getEmail());
+    }
 }
