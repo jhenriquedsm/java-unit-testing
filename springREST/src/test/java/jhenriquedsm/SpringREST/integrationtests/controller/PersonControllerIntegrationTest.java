@@ -1,5 +1,6 @@
 package jhenriquedsm.SpringREST.integrationtests.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
@@ -10,10 +11,10 @@ import io.restassured.specification.RequestSpecification;
 import jhenriquedsm.SpringREST.config.TestConfigs;
 import jhenriquedsm.SpringREST.integrationtests.testcontainers.AbstractIntegrationTest;
 import jhenriquedsm.SpringREST.model.Person;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static io.restassured.RestAssured.given;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -30,7 +31,7 @@ public class PersonControllerIntegrationTest extends AbstractIntegrationTest {
         objectMapper.disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES);
 
         specification = new RequestSpecBuilder()
-                .setBasePath("")
+                .setBasePath("/person")
                 .setPort(TestConfigs.SERVER_PORT)
                     .addFilter(new RequestLoggingFilter(LogDetail.ALL))
                     .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
@@ -39,4 +40,37 @@ public class PersonControllerIntegrationTest extends AbstractIntegrationTest {
         person = new Person("José", "Henrique", "Brasília - DF", "Male", "jhenrique@email.com");
     }
 
+    @DisplayName("Given Person Object When Create One Person Should Return A Person Object")
+    @Order(1)
+    @Test
+    void integrationTest_when_CreateOnePerson_ShouldReturnAPersonObject() throws JsonProcessingException {
+    	var content = given().spec(specification)
+                    .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                    .body(person)
+                .when()
+                    .post()
+                .then()
+                    .statusCode(200)
+                        .extract()
+                            .body()
+                                .asString();
+
+        Person createdPerson = objectMapper.readValue(content, Person.class);
+        person = createdPerson;
+
+        Assertions.assertNotNull(createdPerson);
+        Assertions.assertNotNull(createdPerson.getId());
+        Assertions.assertNotNull(createdPerson.getFirstName());
+        Assertions.assertNotNull(createdPerson.getLastName());
+        Assertions.assertNotNull(createdPerson.getAddress());
+        Assertions.assertNotNull(createdPerson.getGender());
+        Assertions.assertNotNull(createdPerson.getEmail());
+
+        Assertions.assertTrue(createdPerson.getId() > 0);
+        Assertions.assertEquals("José", createdPerson.getFirstName());
+        Assertions.assertEquals("Henrique", createdPerson.getLastName());
+        Assertions.assertEquals("Brasília - DF", createdPerson.getAddress());
+        Assertions.assertEquals("Male", createdPerson.getGender());
+        Assertions.assertEquals("jhenrique@email.com", createdPerson.getEmail());
+    }
 }
