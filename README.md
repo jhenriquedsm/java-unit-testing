@@ -15,4 +15,4 @@
 - [x] Seção 10: Testando uma API REST em Spring Boot 3 - Camada de Repositórios
 - [x] Seção 11: Testando uma API REST em Spring Boot 3 - Camada de Serviços
 - [x] Seção 12: Testando uma API REST em Spring Boot 3 - Camada de Controllers
-- [ ] Seção 13: Testando uma API REST em Spring Boot 3 - Testes de Integração com Testcontainers
+- [x] Seção 13: Testando uma API REST em Spring Boot 3 - Testes de Integração com Testcontainers
