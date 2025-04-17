@@ -14,6 +14,9 @@ import jhenriquedsm.SpringREST.model.Person;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -140,5 +143,67 @@ public class PersonControllerIntegrationTest extends AbstractIntegrationTest {
         Assertions.assertEquals("Brasília - DF", foundPerson.getAddress());
         Assertions.assertEquals("Male", foundPerson.getGender());
         Assertions.assertEquals("jhenrique@email.com", foundPerson.getEmail());
+    }
+
+    @DisplayName("Given Person Object When findAll Should Return A People List")
+    @Order(4)
+    @Test
+    void integrationTest_when_findAll_ShouldReturnAPeopleList() throws JsonProcessingException {
+
+        Person anotherPerson = new Person("Théo", "Henrique", "Brasília - DF", "Male", "thenrique@email.com");
+
+        given().spec(specification)
+                    .contentType(TestConfigs.CONTENT_TYPE_JSON)
+                    .body(anotherPerson)
+                .when()
+                    .post()
+                .then()
+                    .statusCode(200);
+
+        var content = given().spec(specification)
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                        .extract()
+                            .body()
+                                .asString();
+
+        Person[] myArray = objectMapper.readValue(content, Person[].class);
+        List<Person> peopleList = Arrays.asList(myArray);
+
+        Person foundPersonOne = peopleList.get(0);
+
+        Assertions.assertNotNull(foundPersonOne);
+        Assertions.assertNotNull(foundPersonOne.getId());
+        Assertions.assertNotNull(foundPersonOne.getFirstName());
+        Assertions.assertNotNull(foundPersonOne.getLastName());
+        Assertions.assertNotNull(foundPersonOne.getAddress());
+        Assertions.assertNotNull(foundPersonOne.getGender());
+        Assertions.assertNotNull(foundPersonOne.getEmail());
+
+        Assertions.assertTrue(foundPersonOne.getId() > 0);
+        Assertions.assertEquals("José", foundPersonOne.getFirstName());
+        Assertions.assertEquals("Henrique", foundPersonOne.getLastName());
+        Assertions.assertEquals("Brasília - DF", foundPersonOne.getAddress());
+        Assertions.assertEquals("Male", foundPersonOne.getGender());
+        Assertions.assertEquals("jhenrique@email.com", foundPersonOne.getEmail());
+
+        Person foundPersonTwo = peopleList.get(1);
+
+        Assertions.assertNotNull(foundPersonTwo);
+        Assertions.assertNotNull(foundPersonTwo.getId());
+        Assertions.assertNotNull(foundPersonTwo.getFirstName());
+        Assertions.assertNotNull(foundPersonTwo.getLastName());
+        Assertions.assertNotNull(foundPersonTwo.getAddress());
+        Assertions.assertNotNull(foundPersonTwo.getGender());
+        Assertions.assertNotNull(foundPersonTwo.getEmail());
+
+        Assertions.assertTrue(foundPersonTwo.getId() > 0);
+        Assertions.assertEquals("Théo", foundPersonTwo.getFirstName());
+        Assertions.assertEquals("Henrique", foundPersonTwo.getLastName());
+        Assertions.assertEquals("Brasília - DF", foundPersonTwo.getAddress());
+        Assertions.assertEquals("Male", foundPersonTwo.getGender());
+        Assertions.assertEquals("thenrique@email.com", foundPersonTwo.getEmail());
     }
 }
